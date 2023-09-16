@@ -1,0 +1,8 @@
+#Mac
+.DS_Store
+
+#npm packages
+node_modules
+
+#temporary local environment variables
+.env
