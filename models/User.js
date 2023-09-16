@@ -2,12 +2,26 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
     {
-        username: String,
-        email: String,
+        username: {
+            type: String,
+            unique: true,
+            required: true,
+            trim: true
+        },
+        email: {
+            type: String,
+            unique: true,
+            required: true,
+            lowercase: true,  // TODO - annotate this, as well as the line below
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]  // TODO - 2nd parameter required?
+        }
+            //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`   - TODO - attribute in README.md - borrowed from Module 17 Challenge
         // thoughts: [thoughtSchema],
         // friends: [friendSchema]  // TODO - unclear if we want a schema here
     }
 );
+
+// TODO - also be sure to attribute:  https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
 
 // Initialize our User model
 const User = model('user', userSchema);

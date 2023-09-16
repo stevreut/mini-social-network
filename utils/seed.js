@@ -34,8 +34,12 @@ connection.once('open', async () => {
       email: 'seed1@aol.com'
     },
     {
-      username: 'seed user 2',
+      username: '  seed user 2   ',
       email: 'seed2@hotmail.com'
+    },
+    {
+      username: 'seed user 3   ',
+      email: 'seed3hotmailcom'
     }
   ];
 
