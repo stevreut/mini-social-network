@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User } = require('../models');  // TODO - add other models once defined
+const { User, Thought } = require('../models');  // TODO - add other models once defined
 // const { getRandomName, getRandomVideos } = require('./data');
 
 connection.on('error (logged from seed.js)', (err) => err);
@@ -28,6 +28,27 @@ connection.once('open', async () => {
 
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.table(users);
+  
+  const thoughts = [
+    {
+      thoughtText: 'Cogito ergo sum',
+      createdAt: new Date(),
+      username: 'seed user 1'
+    },
+    {
+      thoughtText: 'Fiat lux',
+      createdAt: new Date(2000,1,1,0,5,5),
+      username: 'seed user 2'
+    }
+  ];
+
+  await Thought.collection.insertMany(thoughts);
+
+  // comment
+  console.table(thoughts);
+
+
+  
   console.info('Seeding complete!');
   process.exit(0);
 });

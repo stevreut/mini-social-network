@@ -1,3 +1,22 @@
+const { Schema, model } = require('mongoose');
+
+const thoughtSchema = new Schema(
+    {
+        thoughtText: String,
+        createdAt: Date,
+        username: String,
+        // replies: [reactionSchema]
+    }
+);
+
+// Initialize our User model
+const Thought = model('thought', thoughtSchema);
+
+module.exports = Thought;
+
+
+
+
 // **Thought**:
 
 // * `thoughtText`
