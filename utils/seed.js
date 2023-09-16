@@ -38,12 +38,14 @@ connection.once('open', async () => {
       email: 'seed2@hotmail.com'
     },
     {
-      username: 'seed user 3   ',
-      email: 'seed3hotmailcom'
+      // username: 'seed user 3   ',
+      email: 'seed3HOTmailcomx'
     }
   ];
 
-  await User.collection.insertMany(users);
+  const userResult = await User.collection.insertMany(users);
+  console.log('seed userResult = ',JSON.stringify(userResult));
+  await User.collection.insertOne({email: 'what@is.com'});
 
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.table(users);
