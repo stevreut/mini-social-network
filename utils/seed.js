@@ -11,6 +11,21 @@ connection.once('open', async () => {
   let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
   if (userCheck.length) {
     await connection.dropCollection('users');
+    console.log('users dropped by seed.js');
+    let userCheck = connection.db.listCollections({ name: 'users' }).toArray();
+    console.log('users count after drop = ' + userCheck.length);
+  } else {
+    console.log('no users to drop');
+  }
+
+  let thoughtCheck = await connection.db.listCollections({ name: 'thoughts' }).toArray();
+  if (thoughtCheck.length) {
+    await connection.dropCollection('thoughts');
+    console.log('thoughts dropped by seed.js');
+    let thoughtCheck = connection.db.listCollections({ name: 'thoughts' }).toArray();
+    console.log('thoughts count after drop = ' + thoughtCheck.length);
+  } else {
+    console.log('no thoughts to drop');
   }
 
   const users = [
@@ -39,6 +54,11 @@ connection.once('open', async () => {
       thoughtText: 'Fiat lux',
       createdAt: new Date(2000,1,1,0,5,5),
       username: 'seed user 2'
+    },
+    {
+      thoughtText: 'Now there\'s a thought!',
+      createdAt: new Date(2023,9,19,5,15,25),
+      username: 'seed user 1'
     }
   ];
 
