@@ -1,3 +1,14 @@
+const { Schema, model } = require('mongoose');
+
+const userSchema = new Schema(
+    {
+        username: String,
+        email: String,
+        thoughts: [thoughtSchema],
+        friends: [friendSchema]  // TODO - unclear if we want a schema here
+    }
+);
+
 // **User**:
 
 // * `username`
