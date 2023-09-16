@@ -4,10 +4,16 @@ const userSchema = new Schema(
     {
         username: String,
         email: String,
-        thoughts: [thoughtSchema],
-        friends: [friendSchema]  // TODO - unclear if we want a schema here
+        // thoughts: [thoughtSchema],
+        // friends: [friendSchema]  // TODO - unclear if we want a schema here
     }
 );
+
+// Initialize our User model
+const User = model('user', userSchema);
+
+module.exports = User;
+
 
 // **User**:
 
