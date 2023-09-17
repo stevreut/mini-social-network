@@ -1,4 +1,8 @@
 const { ObjectId } = require('bson');  // TODO - did this auto-populate?  Do I need it?
+// TODO - answer to the above:  This seems to have been auto-inserted as a result of the
+//   declaration "reactionId: ObjectId".  This, however, is a temporary place-holder
+//   declaration, so we should try commenting out line 1 above (and ultimately removing it)
+//   once the definition of reactionId is complete.
 const { Schema, model } = require('mongoose');
 
 const reactionSchema = new Schema(
