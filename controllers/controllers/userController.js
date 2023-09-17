@@ -1,7 +1,7 @@
 // TODO - initially copied almost unaltered from exercise 25
 // TODO - annotate accordingly - unless decide blanket reference
 // TODO - 25 is sufficient
-
+const { ObjectId } = require('mongoose');
 const User = require('../../models/User');  // TODO - altered from original
 const Thought = require('../../models/Thought');
 
@@ -123,6 +123,63 @@ module.exports = {
       res.status(500).json(err.message);  // TODO
     }
   },
+
+  async addUserFriend(req, res) {
+    try {
+      const user = await User.findById(req.params.userId);
+      console.log('user addUserFriend - found for ', req.params.userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      user.friends.push(req.params.friendId);
+      console.log('user addUserFriend - friend added to array');
+      user.save();
+      console.log('user saved');
+
+      res.json(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+
+  },
+
+  async deleteUserFriend(req, res) {
+    try {
+      console.log('enetered deleteUserFriend');
+      const user = await User.findById(req.params.userId);
+      console.log('user deleteUserFriend - found for ', req.params.userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      let matchFound = false;
+      let foundAt = -1;
+      for (let i=0;i<user.friends.length;i++) {
+        if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
+          matchFound = true;
+          foundAt = i;
+        } 
+      }
+      if (!matchFound) {
+        res.status(404).json({message: "friend ID not matched for user"});
+      } else {
+        user.friends.splice(foundAt, 1);
+        console.log('delete at pos ' + foundAt);
+        user.save();
+        console.log('user saved');
+        res.json(user);
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+
+
+  }
 
 
 };
