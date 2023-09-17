@@ -157,18 +157,23 @@ module.exports = {
       }
 
       let matchFound = false;
-      let foundAt = -1;
-      for (let i=0;i<user.friends.length;i++) {
-        if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
-          matchFound = true;
-          foundAt = i;
-        } 
+      if (user.friends.length) {
+        let i = 0;
+        while (i < user.friends.length) {
+          if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
+            matchFound = true;
+            user.friends.splice(i,1);
+            console.log('deleting ' + req.params.friendId + ' at pos ' + i);
+            // If match then do not advance i, as the array will now be shorted by
+            // splice and the SAME position may have ANOTHER matched.
+          } else {
+            i++;
+          }
+        }
       }
       if (!matchFound) {
         res.status(404).json({message: "friend ID not matched for user"});
       } else {
-        user.friends.splice(foundAt, 1);
-        console.log('delete at pos ' + foundAt);
         user.save();
         console.log('user saved');
         res.json(user);
