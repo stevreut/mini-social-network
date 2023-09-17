@@ -14,12 +14,33 @@ const userSchema = new Schema(
             required: true,
             lowercase: true,  // TODO - annotate this, as well as the line below
             match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]  // TODO - 2nd parameter required?
-        }
-            //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`   - TODO - attribute in README.md - borrowed from Module 17 Challenge
-        // thoughts: [thoughtSchema],
-        // friends: [friendSchema]  // TODO - unclear if we want a schema here
+        },
+        //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`   - TODO - attribute in README.md - borrowed from Module 17 Challenge
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'thought',
+            },
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }
+        ]
+    },
+    {
+        toJSON: {
+          virtuals: true,
+        },
+        id: false,
     }
 );
+
+userSchema.virtual('friendCount').get(function () {
+    // TODO - What happens if 'friend' does not exist (yet)?
+    return this.friends.length;
+})
 
 // TODO - also be sure to attribute:  https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
 

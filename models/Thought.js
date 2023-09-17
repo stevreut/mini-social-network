@@ -1,11 +1,44 @@
+const { ObjectId } = require('bson');  // TODO - did this auto-populate?  Do I need it?
 const { Schema, model } = require('mongoose');
+
+const reactionSchema = new Schema(
+    {
+        reactionId: ObjectId,  // TODO
+        reactionBody: {
+            type: String,
+            required: true,
+            max: 280,  // TODO - Is this correct?
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: new Date()  // TODO - or ...?
+            // TODO - needs "getter"
+        }
+    }
+);
 
 const thoughtSchema = new Schema(
     {
-        thoughtText: String,
-        createdAt: Date,
-        username: String,
-        // replies: [reactionSchema]
+        thoughtText: {
+            type: String,
+            required: true,
+            min: 1,
+            max: 280,  // TODO - test with lower value, then change back to 280
+        },    
+        createdAt: {
+            type: Date,
+            default: new Date(),  // TODO - Do we need the more elaborate function notation: () => new Date()  ?
+            // TODO - "getter" method to "format" the time/date
+        },    
+        username: {
+            type: String,
+            required: true,
+        },
+        reactions: [reactionSchema]
     }
 );
 
