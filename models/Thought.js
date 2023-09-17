@@ -1,4 +1,5 @@
-const { ObjectId } = require('bson');  // TODO - did this auto-populate?  Do I need it?
+// const { ObjectId } = require('bson');  // TODO - did this auto-populate?  Do I need it?
+const { Types } = require('mongoose');
 // TODO - answer to the above:  This seems to have been auto-inserted as a result of the
 //   declaration "reactionId: ObjectId".  This, however, is a temporary place-holder
 //   declaration, so we should try commenting out line 1 above (and ultimately removing it)
@@ -7,7 +8,10 @@ const { Schema, model } = require('mongoose');
 
 const reactionSchema = new Schema(
     {
-        reactionId: ObjectId,  // TODO
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
+        },
         reactionBody: {
             type: String,
             required: true,
@@ -19,7 +23,7 @@ const reactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: new Date()  // TODO - or ...?
+            default: Date.now
             // TODO - needs "getter"
         }
     }
@@ -42,8 +46,7 @@ const thoughtSchema = new Schema(
         },    
         createdAt: {
             type: Date,
-            default: new Date(),  // TODO - Do we need the more elaborate function notation: () => new Date()  ?
-            // TODO - "getter" method to "format" the time/date
+            default: Date.now
         },    
         username: {
             type: String,
