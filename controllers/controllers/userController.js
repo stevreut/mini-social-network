@@ -3,6 +3,7 @@
 // TODO - 25 is sufficient
 
 const User = require('../../models/User');  // TODO - altered from original
+const Thought = require('../../models/Thought');
 
 module.exports = {
 
@@ -111,24 +112,14 @@ module.exports = {
       if (!user) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
+      console.log('user delete');//TODO
+      // "Men in Black" functionality - erase all thoughts for a given user
+      const thoughtsDelete = await Thought.deleteMany({ _id: { $in: user.thoughts }});
+      console.log('subordinate user thoughts deleted');
 
-      // const user = await User.findOneAndUpdate(
-      //   { users: req.params.userId },
-      //   { $pull: { users: req.params.userId } },
-      //   { new: true }
-      // );
-
-      // if (!user) {
-      //   return res
-      //     .status(404)
-      //     // .json({ message: 'User created but no user with this id!' });
-      //     // Above corrected to change wording in line below - SR - 2:09 p.m. EDT, 9/15/2023
-      //     .json({ message: 'User delete but no associated user with this id!' });
-      // }
-
-      res.json({ message: 'User successfully deleted!' });
+      res.json({ message: 'User and associated thoughts successfully deleted!' });
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);  // TODO
     }
   },
 
