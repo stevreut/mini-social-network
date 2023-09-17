@@ -4,12 +4,13 @@ const {
     createUser,
     getUsers,
     getSingleUser,
-    updateUser
+    updateUser,
+    deleteUser
 } = require('../../controllers/userController');
 
 router.route('/').get(getUsers).post(createUser);  // TODO - what about put?
 
-router.route('/:userId').get(getSingleUser).put(updateUser);
+router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 
 // TODO - default if no match about?
 

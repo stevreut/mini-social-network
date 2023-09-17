@@ -104,4 +104,33 @@ module.exports = {
     }
   },
 
+  async deleteUser(req, res) {
+    try {
+      const user = await User.findOneAndRemove({ _id: req.params.userId });
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      // const user = await User.findOneAndUpdate(
+      //   { users: req.params.userId },
+      //   { $pull: { users: req.params.userId } },
+      //   { new: true }
+      // );
+
+      // if (!user) {
+      //   return res
+      //     .status(404)
+      //     // .json({ message: 'User created but no user with this id!' });
+      //     // Above corrected to change wording in line below - SR - 2:09 p.m. EDT, 9/15/2023
+      //     .json({ message: 'User delete but no associated user with this id!' });
+      // }
+
+      res.json({ message: 'User successfully deleted!' });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+
 };
