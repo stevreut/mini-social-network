@@ -70,6 +70,21 @@ connection.once('open', async () => {
       thoughtText: 'Now there\'s a thought!',
       createdAt: new Date(2023,9,19,5,15,25),
       username: 'seed user 1'
+    },
+    {
+      thoughtText: 'shh',
+      // let default do createdAt
+      username: 'seed user 2',
+      reactions: [
+        {
+          reactionBody: 'Ain\'t that somethin\'!',
+          username: 'not one of the original seed users'
+        },
+        {
+          reactionBody: 'Another reaction',
+          username: 'seed user 3'
+        }
+      ]
     }
   ];
 

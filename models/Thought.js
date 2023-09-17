@@ -7,7 +7,7 @@ const reactionSchema = new Schema(
         reactionBody: {
             type: String,
             required: true,
-            max: 280,  // TODO - Is this correct?
+            maxLength: 280,
         },
         username: {
             type: String,
@@ -26,8 +26,8 @@ const thoughtSchema = new Schema(
         thoughtText: {
             type: String,
             required: true,
-            min: 1,
-            max: 280,  // TODO - test with lower value, then change back to 280
+            minLength: 1,
+            maxLength: 280,
         },    
         createdAt: {
             type: Date,
