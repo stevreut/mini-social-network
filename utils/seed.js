@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');  // TODO - add other models once defined
-// const { getRandomName, getRandomVideos } = require('./data');
+// const { getRandomName, getRandomVideos } = require('./data');  // TODO - lose this line
 
 connection.on('error (logged from seed.js)', (err) => err);
 
@@ -54,7 +54,17 @@ connection.once('open', async () => {
 
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.table(users);
-  
+
+  const oneUser = await User.findOne({username: 'seed user 2'});
+  const oneUserId = oneUser._id;
+  console.log('seed type of id = ', typeof oneUserId);
+  console.log('seed two user id = ', oneUserId);
+  console.log('user 2 = ', JSON.stringify(oneUser));
+
+  let firstUser = await User.findOne({username: 'seed user 1'});
+  firstUser.friends[0] = oneUserId
+  firstUser.save();  // TODO - note save() is instance method not static
+
   const thoughts = [
     {
       thoughtText: 'Cogito ergo sum',
@@ -63,12 +73,12 @@ connection.once('open', async () => {
     },
     {
       thoughtText: 'Fiat lux',
-      createdAt: new Date(2000,1,1,0,5,5),
-      username: 'seed user 2'
+      createdAt: new Date(2000,0,1,0,5,5),  // Note: 0 = January, per JS convention
+      username: 'seed user 2',
     },
     {
       thoughtText: 'Now there\'s a thought!',
-      createdAt: new Date(2023,9,19,5,15,25),
+      createdAt: new Date(2023,9,19,5,15,25),  // NOTE: 9 = October, per JS convention
       username: 'seed user 1'
     },
     {
