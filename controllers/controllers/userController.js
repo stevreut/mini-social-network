@@ -34,7 +34,7 @@ module.exports = {
 
   // create a new user
   //--------------------
-  // PUT messages should be in the form:
+  // POST messages should be in the form:
   // {
   //    "username": "<user name>",
   //    "email": "<syntactically valid email address>"
@@ -58,6 +58,48 @@ module.exports = {
       const dbUserData = await User.create(req.body);
       res.json(dbUserData);
     } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  // create an existing user
+  //--------------------
+  // PUT messages should be in the form:
+  // {
+  //    "username": "<user name>",
+  //    "email": "<syntactically valid email address>"
+  //    "thoughts": [
+  //      "<thought id 1>",
+  //      "<thought id 2>",
+  //      ...
+  //    ]
+  //    "friends": [
+  //      "<friend user id 1>",
+  //      "<friend user id 2>",
+  //      ...
+  //    ],
+  // }
+  //
+  // Where both the "thoughts" and "friends" attributes and
+  // corresponding arrays are optional
+  //
+  // In addition, the _id index of the user document most be 
+  // provided as the suffix of the URL.
+  async updateUser(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      res.json(user);
+    } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
