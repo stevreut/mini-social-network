@@ -21,6 +21,13 @@ const reactionSchema = new Schema(
     }
 );
 
+reactionSchema.methods.getCreatedAt = function () {
+    // TODO - console logging is temporary, but maintain return
+    const formattedDate = this.createdAt.toLocaleString();
+    console.log('reaction locale Date = ', formattedDate);
+    return formattedDate;
+};
+
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -41,6 +48,14 @@ const thoughtSchema = new Schema(
         reactions: [reactionSchema]
     }
 );
+
+thoughtSchema.methods.getCreatedAt = function () {
+    // TODO - console logging is temporary, but maintain return
+    const formattedDate = this.createdAt.toLocaleString();
+    console.log('thought locale Date = ', formattedDate);
+    return formattedDate;
+};
+
 
 // Initialize our User model
 const Thought = model('thought', thoughtSchema);

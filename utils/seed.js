@@ -57,9 +57,9 @@ connection.once('open', async () => {
 
   const oneUser = await User.findOne({username: 'seed user 2'});
   const oneUserId = oneUser._id;
-  console.log('seed type of id = ', typeof oneUserId);
+  console.log('\n\nseed type of id = ', typeof oneUserId);
   console.log('seed two user id = ', oneUserId);
-  console.log('user 2 = ', JSON.stringify(oneUser));
+  console.log('user 2 = ', JSON.stringify(oneUser), '\n\n');
 
   let firstUser = await User.findOne({username: 'seed user 1'});
   firstUser.friends[0] = oneUserId
@@ -105,6 +105,10 @@ connection.once('open', async () => {
     console.log('\nSTOPPING!\n\n');
     process.exit(0);
   }
+
+const oneThought = await Thought.findOne();
+let thoughtCreated = oneThought.getCreatedAt();
+console.log('thought created at = "' + thoughtCreated + '"');
 
   // comment
   console.table(thoughts);
