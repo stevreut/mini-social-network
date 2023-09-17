@@ -38,14 +38,19 @@ connection.once('open', async () => {
       email: 'seed2@hotmail.com'
     },
     {
-      // username: 'seed user 3   ',
-      email: 'seed3HOTmailcomx'
+      username: 'seed user 3   ',
+      email: 'seed3@HOTmail.com'
     }
   ];
 
-  const userResult = await User.collection.insertMany(users);
-  console.log('seed userResult = ',JSON.stringify(userResult));
-  await User.collection.insertOne({email: 'what@is.com'});
+  try {
+    await User.insertMany(users);
+    console.log('user seed insert successful');
+  } catch (err) {
+    console.log('err on user seed = ', err.message);
+    console.log('\nSTOPPING!\n\n');
+    process.exit(0);
+  }
 
   // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.table(users);
@@ -68,7 +73,13 @@ connection.once('open', async () => {
     }
   ];
 
-  await Thought.collection.insertMany(thoughts);
+  try {
+    await Thought.insertMany(thoughts);
+  } catch (err) {
+    console.log('seed error on thought inserts = ', err.message);
+    console.log('\nSTOPPING!\n\n');
+    process.exit(0);
+  }
 
   // comment
   console.table(thoughts);

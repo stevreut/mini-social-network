@@ -23,6 +23,8 @@ const userSchema = new Schema(
 
 // TODO - also be sure to attribute:  https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
 
+// TODO - also attribute: https://www.youtube.com/watch?v=DZBGEVgL2eE
+
 // Initialize our User model
 const User = model('user', userSchema);
 
