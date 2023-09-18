@@ -130,7 +130,7 @@ module.exports = {
 
 //   async deleteUserFriend(req, res) {
 //     try {
-//       console.log('enetered deleteUserFriend');
+//       console.log('entered deleteUserFriend');
 //       const user = await User.findById(req.params.userId);
 //       console.log('user deleteUserFriend - found for ', req.params.userId);
 
