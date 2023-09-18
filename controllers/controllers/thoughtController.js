@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongoose');
 const Thought = require('../../models/Thought');
+const User = require('../../models/User');
 
 module.exports = {
 
@@ -47,7 +48,25 @@ module.exports = {
   // corresponding arrays are optional
   async createThought(req, res) {
     try {
+      const username = req.body.username;
+      console.log('createThought: username from thought = ', username);
+      if (!username) {
+        res.status(403).json({message: 'attempt to add thought with no username'});  // TODO - 403?
+        return;
+      }
+      let user = await User.findOne({username: username});
+      if (!user) {
+        res.status(404).json({message: 'attempt to add thought where username not on file'});
+        return;
+      }
+      console.log('createThought - user OK');
       const dbThoughtData = await Thought.create(req.body);
+      console.log('createThought dbThoughtData = "', JSON.stringify(dbThoughtData),'"');
+      const thoughtId = dbThoughtData._id;
+      console.log('createThought - thoughtId = ', thoughtId);
+      user.thoughts.push(thoughtId);
+      user.save();
+      console.log('createThought - userSaved');
       res.json(dbThoughtData);
     } catch (err) {
       res.status(500).json(err);
