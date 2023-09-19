@@ -15,3 +15,7 @@ TODO - attributes:
 // TODO - also attribute: https://www.youtube.com/watch?v=DZBGEVgL2eE
 
 // TODO - DB name: miniSocialNetDB
+
+
+
+// TODO - FINAL TODO: delete temporary resources, reference YouTube video in README
