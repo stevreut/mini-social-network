@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 // const { ObjectId } = require('bson');  // TODO - did this auto-populate?  Do I need it?
 const { Types } = require('mongoose');
 // TODO - answer to the above:  This seems to have been auto-inserted as a result of the
@@ -10,8 +11,7 @@ const { Schema, model } = require('mongoose');
 function getCreatedAt (date) {
     // TODO - console logging is temporary, but maintain return
     console.log('thought getter executed');
-    // const formattedDate = date.toLocaleString();
-    formattedDate = new Date(2023,5,5,5,5,5);
+    formattedDate = dayjs(date).format('MMM D, YYYY') + ' at ' + dayjs(date).format('h:mm a');
     console.log('reaction locale Date = ', formattedDate);
     return formattedDate;
 };
