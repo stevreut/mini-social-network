@@ -12,10 +12,15 @@ const userSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            lowercase: true,  // TODO - annotate this, as well as the line below
+            lowercase: true,  // Forcing email addresses to lower-case will enable enforcing of true
+                              // uniqueness since, otherwise, emails that differed only in case would
+                              // not be prevented from being added.
+                              //
+            // The regular expression below was borrowed without alteration from Unit 18 ("NoSQL") activity 17 
+            // of the Full Stack Boot Camp code exercises without alteration; however, that regex was not
+            // used in a "match:" clause in its original context.
             match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]  // TODO - 2nd parameter required?
         },
-        //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`   - TODO - attribute in README.md - borrowed from Module 17 Challenge
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
@@ -38,42 +43,9 @@ const userSchema = new Schema(
 );
 
 userSchema.virtual('friendCount').get(function () {
-    // TODO - What happens if 'friend' does not exist (yet)?
     return this.friends.length;
 })
 
-// TODO - also be sure to attribute:  https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
-
-// TODO - also attribute: https://www.youtube.com/watch?v=DZBGEVgL2eE
-
-// Initialize our User model
 const User = model('user', userSchema);
 
 module.exports = User;
-
-
-// **User**:
-
-// * `username`
-//   * String
-//   * Unique
-//   * Required
-//   * Trimmed
-
-// * `email`
-//   * String
-//   * Required
-//   * Unique
-//   * Must match a valid email address (look into Mongoose's matching validation)
-
-// * `thoughts`
-//   * Array of `_id` values referencing the `Thought` model
-
-// * `friends`
-//   * Array of `_id` values referencing the `User` model (self-reference)
-
-// **Schema Settings**:
-
-// Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
-
-// ---

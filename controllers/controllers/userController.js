@@ -1,8 +1,5 @@
-// TODO - initially copied almost unaltered from exercise 25
-// TODO - annotate accordingly - unless decide blanket reference
-// TODO - 25 is sufficient
 const { ObjectId } = require('mongoose');
-const User = require('../../models/User');  // TODO - altered from original
+const User = require('../../models/User');
 const Thought = require('../../models/Thought');
 
 module.exports = {
@@ -34,27 +31,6 @@ module.exports = {
     }
   },
 
-  // create a new user
-  //--------------------
-  // POST messages should be in the form:
-  // {
-  //    "username": "<user name>",
-  //    "email": "<syntactically valid email address>"
-  //    "thoughts": [
-  //      "<thought id 1>",
-  //      "<thought id 2>",
-  //      ...
-  //    ]
-  //    "friends": [
-  //      "<friend user id 1>",
-  //      "<friend user id 2>",
-  //      ...
-  //    ],
-  // }
-  //
-  // Where both the "thoughts" and "friends" attributes and
-  // corresponding arrays are optional (and, in most contexts, would
-  // not be provided).)
   async createUser(req, res) {
     try {
       const dbUserData = await User.create(req.body);
@@ -64,29 +40,6 @@ module.exports = {
     }
   },
 
-  // create an existing user
-  //--------------------
-  // PUT messages should be in the form:
-  // {
-  //    "username": "<user name>",
-  //    "email": "<syntactically valid email address>"
-  //    "thoughts": [
-  //      "<thought id 1>",
-  //      "<thought id 2>",
-  //      ...
-  //    ]
-  //    "friends": [
-  //      "<friend user id 1>",
-  //      "<friend user id 2>",
-  //      ...
-  //    ],
-  // }
-  //
-  // Where both the "thoughts" and "friends" attributes and
-  // corresponding arrays are optional
-  //
-  // In addition, the _id index of the user document most be 
-  // provided as the suffix of the URL.
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -101,7 +54,6 @@ module.exports = {
 
       res.json(user);
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -109,61 +61,44 @@ module.exports = {
   async deleteUser(req, res) {
     try {
       const user = await User.findOneAndRemove({ _id: req.params.userId });
-
       if (!user) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
-      console.log('user delete');//TODO
-      // "Men in Black" functionality - erase all thoughts for a given user
-      const thoughtsDelete = await Thought.deleteMany({ _id: { $in: user.thoughts }});
-      console.log('subordinate user thoughts deleted');
-
+      await Thought.deleteMany({ _id: { $in: user.thoughts }});
       res.json({ message: 'User and associated thoughts successfully deleted!' });
     } catch (err) {
-      res.status(500).json(err.message);  // TODO
+      res.status(500).json(err);
     }
   },
 
   async addUserFriend(req, res) {
     try {
       const user = await User.findById(req.params.userId);
-      console.log('user addUserFriend - found for ', req.params.userId);
-
       if (!user) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
 
       user.friends.push(req.params.friendId);
-      console.log('user addUserFriend - friend added to array');
       user.save();
-      console.log('user saved');
-
       res.json(user);
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
-
   },
 
   async deleteUserFriend(req, res) {
     try {
-      console.log('enetered deleteUserFriend');
       const user = await User.findById(req.params.userId);
-      console.log('user deleteUserFriend - found for ', req.params.userId);
-
       if (!user) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
-
-      let matchFound = false;
+      let matchFound = false;  // TODO - document this code
       if (user.friends.length) {
         let i = 0;
         while (i < user.friends.length) {
           if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
             matchFound = true;
             user.friends.splice(i,1);
-            console.log('deleting ' + req.params.friendId + ' at pos ' + i);
             // If match then do not advance i, as the array will now be shorted by
             // splice and the SAME position may have ANOTHER matched.
           } else {
@@ -175,16 +110,11 @@ module.exports = {
         res.status(404).json({message: "friend ID not matched for user"});
       } else {
         user.save();
-        console.log('user saved');
         res.json(user);
       }
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
-
-
   }
-
 
 };

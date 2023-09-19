@@ -1,13 +1,14 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');  // TODO - add other models once defined
-// const { getRandomName, getRandomVideos } = require('./data');  // TODO - lose this line
 
 connection.on('error (logged from seed.js)', (err) => err);
 
 connection.once('open', async () => {
   console.log('connected (logged from seed.js)');
-  // Delete the collections if they exist
 
+  // Delete the collections if they exist:
+
+  // ... users collection
   let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
   if (userCheck.length) {
     await connection.dropCollection('users');
@@ -18,6 +19,7 @@ connection.once('open', async () => {
     console.log('no users to drop');
   }
 
+  // ... thoughts collection
   let thoughtCheck = await connection.db.listCollections({ name: 'thoughts' }).toArray();
   if (thoughtCheck.length) {
     await connection.dropCollection('thoughts');
@@ -52,16 +54,12 @@ connection.once('open', async () => {
     process.exit(0);
   }
 
-  // loop through the saved videos, for each video we need to generate a video response and insert the video responses
   console.table(users);
 
-  const oneUser = await User.findOne({username: 'seed user 2'});
+  const oneUser = await User.findOne({ username: 'seed user 2' });
   const oneUserId = oneUser._id;
-  console.log('\n\nseed type of id = ', typeof oneUserId);
-  console.log('seed two user id = ', oneUserId);
-  console.log('user 2 = ', JSON.stringify(oneUser), '\n\n');
 
-  let firstUser = await User.findOne({username: 'seed user 1'});
+  let firstUser = await User.findOne({ username: 'seed user 1' });
   firstUser.friends[0] = oneUserId
   firstUser.save();  // TODO - note save() is instance method not static
 
@@ -73,12 +71,12 @@ connection.once('open', async () => {
     },
     {
       thoughtText: 'Fiat lux',
-      createdAt: new Date(2000,0,1,0,5,5),  // Note: 0 = January, per JS convention
+      createdAt: new Date(2000, 0, 1, 0, 5, 5),  // Note: 0 = January, per JS convention
       username: 'seed user 2',
     },
     {
       thoughtText: 'Now there\'s a thought!',
-      createdAt: new Date(2023,9,19,5,15,25),  // NOTE: 9 = October, per JS convention
+      createdAt: new Date(2023, 9, 19, 5, 15, 25),  // NOTE: 9 = October, per JS convention
       username: 'seed user 1'
     },
     {
@@ -106,15 +104,8 @@ connection.once('open', async () => {
     process.exit(0);
   }
 
-const oneThought = await Thought.findOne();
-let thoughtCreated = oneThought.getCreatedAt();
-console.log('thought created at = "' + thoughtCreated + '"');
-
-  // comment
   console.table(thoughts);
 
-
-  
-  console.info('Seeding complete!');
+  console.info('\n\n   *** Seeding complete! ***\n\n');
   process.exit(0);
 });

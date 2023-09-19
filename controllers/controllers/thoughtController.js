@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongoose');
+const { ObjectId } = require('mongoose');  // TODO - is this line still needed?
 const Thought = require('../../models/Thought');
 const User = require('../../models/User');
 
@@ -29,29 +29,11 @@ module.exports = {
     }
   },
 
-  // create a new thought
-  //--------------------
-  // POST messages should be in the form:
-  // {
-  //    "thoughtText": "<narrative thought content>"
-  //    "username": "<user name>",
-  //    "createdAt": <Date>
-  //    "reactions": [
-  //       {
-  //         "reactionBody": "<narrative reaction content>",
-  //         "username": "<user name of user reacting to though>"
-  //       }, ...
-  //    ]
-  // }
-  //
-  // Where both the "createAt" and "reactions" attributes and
-  // corresponding arrays are optional
   async createThought(req, res) {
     try {
       const username = req.body.username;
-      console.log('createThought: username from thought = ', username);
       if (!username) {
-        res.status(403).json({message: 'attempt to add thought with no username'});  // TODO - 403?
+        res.status(400).json({message: 'attempt to add thought with no username'});
         return;
       }
       let user = await User.findOne({username: username});
@@ -59,39 +41,16 @@ module.exports = {
         res.status(404).json({message: 'attempt to add thought where username not on file'});
         return;
       }
-      console.log('createThought - user OK');
       const dbThoughtData = await Thought.create(req.body);
-      console.log('createThought dbThoughtData = "', JSON.stringify(dbThoughtData),'"');
       const thoughtId = dbThoughtData._id;
-      console.log('createThought - thoughtId = ', thoughtId);
       user.thoughts.push(thoughtId);
       user.save();
-      console.log('createThought - userSaved');
       res.json(dbThoughtData);
     } catch (err) {
       res.status(500).json(err);
     }
   },
 
-  // update an existing thought
-  //--------------------
-  // {
-  //    "thoughtText": "<narrative thought content>"
-  //    "username": "<user name>",
-  //    "createdAt": <Date>
-  //    "reactions": [
-  //       {
-  //         "reactionBody": "<narrative reaction content>",
-  //         "username": "<user name of user reacting to though>"
-  //       }, ...
-  //    ]
-  // }
-  //
-  // Where all attributes are optional but presumably at one would
-  // be provided.
-  //
-  // In addition, the _id index of the thought document must be 
-  // provided as the suffix of the URL.
   async updateThought(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
@@ -106,7 +65,6 @@ module.exports = {
 
       res.json(thought);
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -118,10 +76,9 @@ module.exports = {
       if (!thought) {
         return res.status(404).json({ message: 'No thought with this id!' });
       }
-      console.log('thought deleted');//TODO
       res.json({ message: 'Thought successfully deleted!' });
     } catch (err) {
-      res.status(500).json(err.message);  // TODO
+      res.status(500).json(err);
     }
   },
 
@@ -152,7 +109,6 @@ module.exports = {
       while (i<thought.reactions.length) {
         if (thought.reactions[i]._id == req.params.reactionId) {
           matched = true;
-          console.log('matched ', req.params.reactionId, ' at ', i);
           thought.reactions.splice(i, 1);
         } else {
           i++;
@@ -167,7 +123,6 @@ module.exports = {
     } catch (err) {
       res.status(500).json(err);
     }
-
   }
 
 };

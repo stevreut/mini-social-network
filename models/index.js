@@ -1,4 +1,4 @@
-const User = require('./User');  // TODO - add other models as they arise
+const User = require('./User');
 const Thought = require('./Thought');
 
-module.exports = { User, Thought /*TODO - see above*/ };
+module.exports = { User, Thought };
