@@ -1,5 +1,7 @@
 # Mini Social Network
 
+TEST VERBIAGE TO CHECK GIT/GITHUB 9/19 2:05 P.M. (TODO)
+
 ## Description
 
 A NodeJS application which ... TODO
