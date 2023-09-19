@@ -141,6 +141,32 @@ module.exports = {
   },
 
   async deleteReaction(req, res) {
+    try {
+      let thought = await Thought.findById(req.params.thoughtId);
+      if (!thought) {
+        res.status(404).json({ message: 'no thought found for id' });
+        return;
+      }
+      let i = 0;
+      let matched = false;
+      while (i<thought.reactions.length) {
+        if (thought.reactions[i]._id == req.params.reactionId) {
+          matched = true;
+          console.log('matched ', req.params.reactionId, ' at ', i);
+          thought.reactions.splice(i, 1);
+        } else {
+          i++;
+        }
+      }
+      if (matched) {
+        thought.save();
+        res.json({message: 'reaction deleted'});
+      } else {
+        res.status(404).json({message: 'no reaction found for reactionId'});
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
 
   }
 
