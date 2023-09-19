@@ -6,6 +6,18 @@ const { Types } = require('mongoose');
 //   once the definition of reactionId is complete.
 const { Schema, model } = require('mongoose');
 
+// Used by two schemas - reactionSchema and thoughtSchema
+function getCreatedAt (date) {
+    // TODO - console logging is temporary, but maintain return
+    console.log('thought getter executed');
+    // const formattedDate = date.toLocaleString();
+    formattedDate = new Date(2023,5,5,5,5,5);
+    console.log('reaction locale Date = ', formattedDate);
+    return formattedDate;
+};
+
+
+
 const reactionSchema = new Schema(
     {
         reactionId: {
@@ -23,18 +35,15 @@ const reactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: getCreatedAt
             // TODO - needs "getter"
         }
+    }, 
+    { 
+        toJSON: { getters: true } 
     }
 );
-
-reactionSchema.methods.getCreatedAt = function () {
-    // TODO - console logging is temporary, but maintain return
-    const formattedDate = this.createdAt.toLocaleString();
-    console.log('reaction locale Date = ', formattedDate);
-    return formattedDate;
-};
 
 const thoughtSchema = new Schema(
     {
@@ -46,22 +55,27 @@ const thoughtSchema = new Schema(
         },    
         createdAt: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: getCreatedAt
         },    
         username: {
             type: String,
             required: true,
         },
         reactions: [reactionSchema]
+    },
+    { 
+        toJSON: { getters: true } 
     }
+
 );
 
-thoughtSchema.methods.getCreatedAt = function () {
-    // TODO - console logging is temporary, but maintain return
-    const formattedDate = this.createdAt.toLocaleString();
-    console.log('thought locale Date = ', formattedDate);
-    return formattedDate;
-};
+// thoughtSchema.methods.getCreatedAt = function () {
+//     // TODO - console logging is temporary, but maintain return
+//     const formattedDate = this.createdAt.toLocaleString();
+//     console.log('thought locale Date = ', formattedDate);
+//     return formattedDate;
+// };
 
 
 // Initialize our User model
