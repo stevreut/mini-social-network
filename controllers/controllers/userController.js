@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongoose');
 const User = require('../../models/User');
 const Thought = require('../../models/Thought');
 
@@ -92,21 +91,29 @@ module.exports = {
       if (!user) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
-      let matchFound = false;  // TODO - document this code
+      // Here we march through the array if friends, noting any matches and
+      // deleting them (via splice) as we progress through the array.  Note that 
+      // this loop anticipates the possibility of MULTIPLE matches.
+      let matchFound = false;
       if (user.friends.length) {
         let i = 0;
         while (i < user.friends.length) {
           if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
             matchFound = true;
             user.friends.splice(i,1);
-            // If match then do not advance i, as the array will now be shorted by
-            // splice and the SAME position may have ANOTHER matched.
+            // If match then do NOT advance i, as the array will now be shortened by
+            // splice and the SAME position may have ANOTHER matched.  (i.e. without
+            // advancing i, we are still one position closer to the end of the array.)
           } else {
+            // Since no match was found, advance to next array element
             i++;
           }
         }
       }
       if (!matchFound) {
+        // If we did not find a match then nothing actually changed in the friends
+        // array or in the thought document that contains it.  Therefore there is no
+        // no need to save and also failure to find a match indicates a likely caller error.
         res.status(404).json({message: "friend ID not matched for user"});
       } else {
         user.save();

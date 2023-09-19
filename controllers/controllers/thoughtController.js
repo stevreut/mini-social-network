@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongoose');  // TODO - is this line still needed?
 const Thought = require('../../models/Thought');
 const User = require('../../models/User');
 
