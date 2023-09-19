@@ -1,37 +1,33 @@
 # Mini Social Network
 
-TEST VERBIAGE TO CHECK GIT/GITHUB 9/19 2:05 P.M. (TODO)
+A demonstration social network back-end supported by a MongoDB/Mongoose database
 
 ## Description
 
-A NodeJS application which ... TODO
+This is an implementation of a demonstration miniature "social network" application, but with only the most minimal RESTful API interface and, at present, no corresponding front-end implementation.  Its purpose is to demonstrate the ability of support the various API http (TODO) request paths via Express, Node.js, and a MongoDB database (as encapsulated by mongoose).
 
-- Key features of the application are:
-    - use of a *Shape* superclass representing objects with a 
-    defined center point and color, and that have a render() method that returns an SVG element (string) representing that shape.  *Shape* is an **abstract** class and, thus, has no implementation for the render() method, only a no-op
-    render() method which is expected to be overridden by any
-    subclasses of *Shape*.
-    - use of several specific *Shape* subclasses:
-        - *Circle*
-        - *Nautilus*
-        - *Square*
-        - *Text*
-        - *Triangle*
 
-        Each of these child classes produces an SVG sub-element (as a string) that represents a *centered* rendering of the shape in question and having the specified color.
-    - use of an HtmlColorValidator class which is used to determined with a given string value is a valid name for an HTML color, such names being either one of the color names from the CSS standard or a color hex code.
-    - use of the *inquirer* package for purposes of prompting the user for input.
+Key features of the application:
+- **a modified MVC organization** with all data modelling in the /models directory and all routing and higher-level processing logic in the /controllers directory.  (As there is no front-end, there is no "models" layer nor corresponding /models directory.)
+        
+    A slight variation from similarly layered past efforts is the creation of a /controllers/controllers (nested) directory, this having been done in order to better isolate the various controller scripts from the routing scripts.  
+    
+- **[MongoDB](https://www.mongodb.com/)/[mongoose](https://mongoosejs.com/)** - An underlying MongoDB database which is entirely encapsulated via the Mongoose package.  (Consequently no direct npm install of MongoDB is required.)
+- **[Express JS](https://expressjs.com/)** - Intercepts and handles all http(TODO) requests
+- **[Day.js](https://day.js.org/)** - The date and time handling package used (on a very limited basis) to present Javascript/NodeJS dates in a more human-readable format.
+- **[Node.js®](https://nodejs.org/en)** - The Javascript server-side dialect in which this application, including all of the above packages, is written.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing/Demonstration](#testing--demonstration)
 - [Credits](#credits)
 - [License](#license)
 
 ## Installation
 
-1. Install NodeJS if it is not already installed.
+1. Install Node.js® if it is not already installed.    ([Node downloads](https://nodejs.org/en/download))
 2. from the [mini-social-network repository of GitHub](https://github.com/stevreut/mini-social-network):
     - select the green "**<> Code**" button
     - select the "**Download ZIP**" button from the resulting pop-up dialog
@@ -41,27 +37,20 @@ A NodeJS application which ... TODO
     - on Windows: right-click and [follow these instructions](https://support.microsoft.com/en-us/windows/zip-and-unzip-files-f6dde0a7-0fec-8294-e1d3-703ed85e7ebc)
 5. Using bash, Mac terminal, or equivalent utility:
     - `cd` to the resulting `mini-social-network-main` directory
-    - `npm install` (to install "jest" and "inquirer") 
+    - `npm install`
 
 ## Usage
 
-1. Using bash, Mac terminal, or equivalent utility: cd to the "mini-social-network-main" directory
-2. Once in the "mini-social-network-main" directory, node index.js to run the application.
-3. You will be prompted for each of the following:
-    - *"What are your initials? (no more than 3)?"*
-        - (Input will be automatically trimmed of excess spaces and shifted to upper case.)
-    - *"What should be the color of the initials? (can be color name or color hex code)"*
-    - *"Choose a shape for the background (Use arrow keys)"*
-        - Note that a selection is made using the up-arrow or down-arrow keys and [enter]
-    - *"Color of background shape (can be color name or color hex code)"*
-4. Once all four questions have been answered, a file `logo.svg` will be produced in the same directory in which the application was run.  (Note that any pre-existing `logo.svg` file in the same directory will be overwritten.)
-5. Note that no response from the user will be rejected *per se*; however responses which are not acceptable are overridden - specifically:
-    - If no initials are entered then "XYZ" is used instead.
-    - If too many initials are entered then only the first three are used.
-    - If an invalid color name or hex code is entered then the color black is used instead.
+1. Using bash, Mac terminal, or equivalent utility: cd to the `mini-social-network-main` directory
+2. *OPTIONAL:* Once in the `mini-social-network-main` directory, `npm run seed` to seed the database with initial values designed for demonstration.  (The application will work find without this step, but the database collections will initally be empty in that case.)
+3. From within the `mini-social-network` directory, issue the instruction `npm run start` to run the server locally.
+4. Using a web browser on the local platform, access the server/app via URL `http://localhost:3001/` (suffixed with appropriate URL suffixes as shown in the [demo](TODO)).  Alternatively, use [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/), or any equivalent requestor application to access the same URL paths.
+
+   URL paths available are:
+
+## Testing / Demonstration
 
 **Note** that a demonstration video can be found on *YouTube* by [following this link](https://www.youtube.com/watch?v=TODO).
-
 ## Credits
 
 Special thanks to the teaching staff of the University of Pennsylvania Full Stack Coding Boot Camp (UPENN-VIRT-FSF-FT-07-2023-U-LOLC-M-F).
