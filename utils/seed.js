@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User, Thought } = require('../models');  // TODO - add other models once defined
+const { User, Thought } = require('../models');
 
 connection.on('error (logged from seed.js)', (err) => err);
 
@@ -61,7 +61,7 @@ connection.once('open', async () => {
 
   let firstUser = await User.findOne({ username: 'seed user 1' });
   firstUser.friends[0] = oneUserId
-  firstUser.save();  // TODO - note save() is instance method not static
+  firstUser.save();
 
   const thoughts = [
     {

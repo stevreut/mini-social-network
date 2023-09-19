@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 const { Types } = require('mongoose');
-const { Schema, model } = require('mongoose');  // TODO - what is "model" here?  Is it needed?
+const { Schema, model } = require('mongoose');
 
 // Used by two schemas - reactionSchema and thoughtSchema for getters
 function getCreatedAt (date) {
