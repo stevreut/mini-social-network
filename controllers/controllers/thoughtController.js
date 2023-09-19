@@ -125,67 +125,23 @@ module.exports = {
     }
   },
 
-//   async addUserFriend(req, res) {
-//     try {
-//       const user = await User.findById(req.params.userId);
-//       console.log('user addUserFriend - found for ', req.params.userId);
+  async addReaction(req, res) {
+    try {
+      let thought = await Thought.findById(req.params.thoughtId);
+      if (!thought) {
+        res.status(404).json({ message: 'no thought found for id' });
+        return;
+      }
+      thought.reactions.push(req.body);
+      thought.save();
+      res.json(thought);  // TODO is thought the thing to return here?
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 
-//       if (!user) {
-//         return res.status(404).json({ message: 'No user with this id!' });
-//       }
+  async deleteReaction(req, res) {
 
-//       user.friends.push(req.params.friendId);
-//       console.log('user addUserFriend - friend added to array');
-//       user.save();
-//       console.log('user saved');
-
-//       res.json(user);
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json(err);
-//     }
-
-//   },
-
-//   async deleteUserFriend(req, res) {
-//     try {
-//       console.log('entered deleteUserFriend');
-//       const user = await User.findById(req.params.userId);
-//       console.log('user deleteUserFriend - found for ', req.params.userId);
-
-//       if (!user) {
-//         return res.status(404).json({ message: 'No user with this id!' });
-//       }
-
-//       let matchFound = false;
-//       if (user.friends.length) {
-//         let i = 0;
-//         while (i < user.friends.length) {
-//           if (user.friends[i] == req.params.friendId) {  // Deliberate ==, not ===
-//             matchFound = true;
-//             user.friends.splice(i,1);
-//             console.log('deleting ' + req.params.friendId + ' at pos ' + i);
-//             // If match then do not advance i, as the array will now be shorted by
-//             // splice and the SAME position may have ANOTHER matched.
-//           } else {
-//             i++;
-//           }
-//         }
-//       }
-//       if (!matchFound) {
-//         res.status(404).json({message: "friend ID not matched for user"});
-//       } else {
-//         user.save();
-//         console.log('user saved');
-//         res.json(user);
-//       }
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json(err);
-//     }
-
-
-//   }
-
+  }
 
 };
