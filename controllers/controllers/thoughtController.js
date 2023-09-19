@@ -90,7 +90,7 @@ module.exports = {
       }
       thought.reactions.push(req.body);
       thought.save();
-      res.json(thought);  // TODO is thought the thing to return here? (check sample screens)
+      res.json(thought);
     } catch (err) {
       res.status(500).json(err);
     }
