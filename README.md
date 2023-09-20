@@ -64,8 +64,6 @@ Similarly, the regular expression (`/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,
 
 In addition to the code samples made available as part of the Coding Boot Camp, the following external resources were consulted:
 
-// TODO - see attribution notes at end
-
 - [MDN Web Docs](https://developer.mozilla.org/en-US/)
 - [stackoverflow](https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax) discussion of valid email syntax
 - [Mongoose Crash Course - Beginner Through Advanced](https://www.youtube.com/watch?v=DZBGEVgL2eE)  (YouTube, channel "Web Dev Symplified")

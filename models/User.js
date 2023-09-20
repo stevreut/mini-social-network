@@ -19,7 +19,7 @@ const userSchema = new Schema(
             // The regular expression below was borrowed without alteration from Unit 18 ("NoSQL") activity 17 
             // of the Full Stack Boot Camp code exercises without alteration; however, that regex was not
             // used in a "match:" clause in its original context.
-            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]  // TODO - 2nd parameter required?
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]
         },
         thoughts: [
             {
