@@ -46,9 +46,6 @@ Key features of the application:
 3. From within the `mini-social-network` directory, issue the instruction `npm run start` to run the server locally.
 4. Using a web browser on the local platform, access the server/app via URL `http://localhost:3002/` (suffixed with appropriate URL suffixes as shown in the [demo](TODO)).  Alternatively, use [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/), or any equivalent requestor application to access the same URL paths.
 
-   URL paths available are:
-
-   TODO
 
 ## Testing / Demonstration
 
@@ -72,11 +69,3 @@ In addition to the code samples made available as part of the Coding Boot Camp, 
 ## License
 
 As of this date (19 September 2023), no licensing policy has been established for this project or its repository.
-
-
-
-
-
-
-
-// TODO - FINAL TODO: delete temporary resources, reference YouTube video in README
