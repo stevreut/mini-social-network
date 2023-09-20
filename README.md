@@ -44,12 +44,12 @@ Key features of the application:
 1. Using bash, Mac terminal, or equivalent utility: cd to the `mini-social-network-main` directory
 2. *OPTIONAL:* In the `mini-social-network-main` directory, `npm run seed` to seed the database with initial values designed for demonstration.  (The application will work find without this step, but the database collections will initially be empty in that case.)
 3. From within the `mini-social-network` directory, issue the instruction `npm run start` to run the server locally.
-4. Using a web browser on the local platform, access the server/app via URL `http://localhost:3002/` (suffixed with appropriate URL suffixes as shown in the [demo](TODO)).  Alternatively, use [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/), or any equivalent requestor application to access the same URL paths.
+4. Using a web browser on the local platform, access the server/app via URL `http://localhost:3002/` (suffixed with appropriate URL suffixes as shown in the [demo](https://youtu.be/HzynJl7fa-s)).  Alternatively, use [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/), or any equivalent requestor application to access the same URL paths.
 
 
 ## Testing / Demonstration
 
-**Note** that a demonstration video can be found on *YouTube* by [following this link](https://www.youtube.com/watch?v=TODO).
+**Note** that a demonstration video can be found on *YouTube* by [following this link](https://youtu.be/HzynJl7fa-s) (YouTube).
 
 ## Credits
 
